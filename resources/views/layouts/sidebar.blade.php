@@ -91,19 +91,19 @@
             </li> --}}
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
+            <li class="nav-item {{ $data['menuActive'] == 'penduduk' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('main-data-penduduk') }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Data Penduduk</span></a>
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Data Penduduk</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item {{ $data['menuActive'] == 'provinsi' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('main-data-provinsi') }}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Data Provinsi</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ $data['menuActive'] == 'kabupaten' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('main-data-kabupaten') }}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Data Kabupaten</span></a>

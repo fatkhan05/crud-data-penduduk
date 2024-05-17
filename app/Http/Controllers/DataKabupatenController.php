@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 class DataKabupatenController extends Controller
 {
+    private $menuActive = "kabupaten";
     public function index()
     {
-        return view('data-kabupaten.main');
+        $this->data['menuActive'] = $this->menuActive;
+        return view('data-kabupaten.main')->with('data', $this->data);
     }
 
     public function create()

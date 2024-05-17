@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 
 class DataProvinsiController extends Controller
 {
+    private $menuActive = "provinsi";
     public function index()
     {
-        return view('data-provinsi.main');
+        $this->data['menuActive'] = $this->menuActive;
+        return view('data-provinsi.main')->with('data', $this->data);
     }
 
-    public function create()
+    public function form()
     {
-        //
+        return view('data-provinsi.form');
     }
 
     public function store(Request $request)

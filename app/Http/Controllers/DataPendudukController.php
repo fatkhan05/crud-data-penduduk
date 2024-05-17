@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 class DataPendudukController extends Controller
 {
+    private $menuActive = "penduduk";
     public function index()
     {
-        return view('data-penduduk.main');
+        $this->data['menuActive'] = $this->menuActive;
+        return view('data-penduduk.main')->with('data', $this->data);
     }
 
     public function form()
