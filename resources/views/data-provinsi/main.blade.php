@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Data Provinsi
+@endsection
 @section('content')
     <div class="card shadow mb-4 main-page">
         <div class="card-header py-3">
@@ -20,9 +23,6 @@
                             <th>Salary</th>
                         </tr>
                     </thead>
-                    <tbody>
-
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -33,12 +33,95 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#dataTables').dataTable( {
-            } );
+            console.log('datatable');
+            var table = $('#dataTables').dataTable({
+                processing: true,
+                serverSide: true,
+                language: {
+                    searchPlaceholder: "Ketikkan yang dicari"
+                },
+                ajax: "{{ route('main-data-provinsi') }}",
+                columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    render: function(data, type, row) {
+                    return '<p style="color:black">' + data + '</p>';
+                    }
+                },
+                {
+                    data: 'nopendaftaran_lama',
+                    name: 'nopendaftaran_lama',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return '<p style="color:black">' + data + '</p>';
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    data: 'NOPORSI',
+                    name: 'NOPORSI',
+                    render: function(data, type, row) {
+                    if(data) {
+                        return '<p style="color:black">'+data+'</p>';
+                    } else {
+                        return '-'
+                    }
+                    }
+                },
+                {
+                    data: 'nmLengkap',
+                    name: 'nmLengkap',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return '<p style="color:black">' + data + '</p>';
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    data: 'alamat',
+                    name: 'alamat',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return '<p style="color:black">' + data + '</p>';
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    data: 'estimasi_keberangkatan',
+                    name: 'estimasi_keberangkatan',
+                    render: function(data, type, row) {
+                        const date = new Date(data);
+                        const year = date.getFullYear();
+                        return '<p style="color:black">'+year+'</p>';
+                    }
+                },
+                {
+                    data: 'notelp',
+                    name: 'notelp',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return '<p style="color:black">' + data + '</p>';
+                        } else {
+                            return '-'
+                        }
+                    }
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+
+                }]
+            });
         })
         function addRow() {
             $('.main-page').hide();
-            $.post("{!! route('form-data-penduduk') !!}", {
+            $.post("{!! route('form-data-provinsi') !!}", {
                 _token: "{{ csrf_token() }}"
             }).done(function(data){
                 if(data.status == 'success'){
@@ -50,3 +133,5 @@
         }
     </script>
 @endpush
+
+{{--  --}}

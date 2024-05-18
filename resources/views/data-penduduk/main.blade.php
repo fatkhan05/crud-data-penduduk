@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Data Penduduk
+@endsection
 @section('content')
     {{-- <h1>data penduduk</h1> --}}
     <div class="card shadow mb-4 main-page">

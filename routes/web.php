@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-});
+// Route::get('/', function () {
+//     return view('dashboard');
+// });
 
 # DATA PENDUDUK
-Route::get('/data-penduduk', [DataPendudukController::class, 'index'])->name('main-data-penduduk');
+// Route::get('/data-penduduk', [DataPendudukController::class, 'index'])->name('main-data-penduduk');
+Route::get('/', [DataPendudukController::class, 'index'])->name('main-data-penduduk');
 Route::post('/data-penduduk-form', [DataPendudukController::class, 'form'])->name('form-data-penduduk');
 
 # DATA PROVINSI
 Route::get('/data-provinsi', [DataProvinsiController::class, 'index'])->name('main-data-provinsi');
+Route::post('/data-provinsi-form', [DataProvinsiController::class, 'form'])->name('form-data-provinsi');
+Route::post('/data-provinsi-store', [DataProvinsiController::class, 'store'])->name('store-data-provinsi');
 
 # DATA KABUPATEN
 Route::get('/data-kabupaten', [DataKabupatenController::class, 'index'])->name('main-data-kabupaten');

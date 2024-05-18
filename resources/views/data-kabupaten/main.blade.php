@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('title')
+    Data Kabupaten
+@endsection
 @section('content')
     <div class="card shadow mb-4 main-page">
         <div class="card-header py-3">

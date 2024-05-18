@@ -3,9 +3,9 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    {{-- <i class="fas fa-laugh-wink"></i> --}}
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">DATA PENDUDUK <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -22,9 +22,9 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            {{-- <div class="sidebar-heading">
                 Utama
-            </div>
+            </div> --}}
 
             <!-- Nav Item - Pages Collapse Menu -->
             {{-- <li class="nav-item">
@@ -62,7 +62,7 @@
             </li> --}}
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            {{-- <hr class="sidebar-divider"> --}}
 
             <!-- Heading -->
             {{-- <div class="sidebar-heading">
