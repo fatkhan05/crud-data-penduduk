@@ -29,6 +29,8 @@ Route::post('/data-penduduk-form', [DataPendudukController::class, 'form'])->nam
 Route::get('/data-provinsi', [DataProvinsiController::class, 'index'])->name('main-data-provinsi');
 Route::post('/data-provinsi-form', [DataProvinsiController::class, 'form'])->name('form-data-provinsi');
 Route::post('/data-provinsi-store', [DataProvinsiController::class, 'store'])->name('store-data-provinsi');
+Route::post('/data-provinsi-destroy', [DataProvinsiController::class, 'destroy'])->name('destroy-data-provinsi');
 
 # DATA KABUPATEN
 Route::get('/data-kabupaten', [DataKabupatenController::class, 'index'])->name('main-data-kabupaten');
+Route::post('/form-data-kabupaten', [DataKabupatenController::class, 'form'])->name('form-data-kabupaten');

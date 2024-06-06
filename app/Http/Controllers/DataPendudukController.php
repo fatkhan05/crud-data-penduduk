@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\Services\DataTable;
 
 class DataPendudukController extends Controller
 {
     private $menuActive = "penduduk";
-    public function index()
+    public function index(Request $request)
     {
         $this->data['menuActive'] = $this->menuActive;
+        if($request->ajax()) {
+            
+        }
         return view('data-penduduk.main')->with('data', $this->data);
     }
 

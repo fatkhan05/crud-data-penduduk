@@ -15,17 +15,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>No</th>
+                            <th>Nama Kabupaten</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -36,13 +30,43 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#dataTables').dataTable( {
-            } );
+            var table = $('#dataTable').dataTable({
+              processing: true,
+              serverSide: true,
+              language: {
+                  searchPlaceholder: "Ketikkan yang dicari"
+              },
+              ajax: "{{ route('main-data-kabupaten') }}",
+              columns: [{
+                  data: 'DT_RowIndex',
+                  name: 'DT_RowIndex',
+                  render: function(data, type, row) {
+                  return '<p style="color:black">' + data + '</p>';
+                  }
+              },
+              {
+                  data: 'nama',
+                  name: 'nama',
+                  render: function(data, type, row) {
+                      if (data) {
+                          return '<p style="color:black">' + data + '</p>';
+                      } else {
+                          return '-'
+                      }
+                  }
+              },
+              {
+                  data: 'action',
+                  name: 'action',
+
+              }]
+          });
         })
-        function addRow() {
+        function addRow(id) {
             $('.main-page').hide();
-            $.post("{!! route('form-data-penduduk') !!}", {
-                _token: "{{ csrf_token() }}"
+            $.post("{!! route('form-data-kabupaten') !!}", {
+                _token: "{{ csrf_token() }}",
+                id: id
             }).done(function(data){
                 if(data.status == 'success'){
                     $('.other-page').html(data.content).fadeIn();

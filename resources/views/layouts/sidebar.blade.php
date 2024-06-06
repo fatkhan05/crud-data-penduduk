@@ -2,8 +2,9 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
+                <div class="sidebar-brand-icon">  {{--  rotate-n-15 --}}
                     {{-- <i class="fas fa-laugh-wink"></i> --}}
+                    {{-- <img src="{{ asset('img/building1.png') }}" alt="" width="30" height="30"> --}}
                 </div>
                 <div class="sidebar-brand-text mx-3">DATA PENDUDUK <sup></sup></div>
             </a>
@@ -92,6 +93,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item {{ $data['menuActive'] == 'penduduk' ? 'active' : '' }}">
+            {{-- <li class="nav-item {{ $menuActive == 'penduduk' ? 'active' : '' }}"> --}}
                 <a class="nav-link" href="{{ route('main-data-penduduk') }}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Data Penduduk</span></a>
@@ -99,11 +101,13 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item {{ $data['menuActive'] == 'provinsi' ? 'active' : '' }}">
+            {{-- <li class="nav-item {{ $menuActive == 'provinsi' ? 'active' : '' }}"> --}}
                 <a class="nav-link" href="{{ route('main-data-provinsi') }}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Data Provinsi</span></a>
             </li>
             <li class="nav-item {{ $data['menuActive'] == 'kabupaten' ? 'active' : '' }}">
+            {{-- <li class="nav-item {{ $menuActive == 'kabupaten' ? 'active' : '' }}"> --}}
                 <a class="nav-link" href="{{ route('main-data-kabupaten') }}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Data Kabupaten</span></a>

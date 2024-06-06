@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class DataProvinsiController extends Controller
@@ -15,36 +16,45 @@ class DataProvinsiController extends Controller
         // return 'dksnnfsdf';
         $this->data['menuActive'] = $this->menuActive;
         if ($request->ajax()) {
-        $data = Provinsi::get();
-            // return $data;
+            $data = Provinsi::orderBy('id', 'desc')->get();
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-                // $btn = '<a href="javascript:void(0)" onclick="addPorsi('.$row->id.')" style="margin-right: 5px;" class="btn btn-sm btn-secondary"><i class="fa fa-bars" style="font-size: 23px; margin-right: -0.5px; margin-top: 3px;"></i></a>';
-            $btn = '<a href="javascript:void(0)" onclick="editForm('.$row->id.')" style="margin-right: 5px;" class="btn btn-sm btn-warning"><i class="fa fa-pencil" style="font-size: 23px; margin-right: -0.5px;"></i></a>';
-            $btn .= '<a href="javascript:void(0)" onclick="deleteRow('.$row->id.')" style="margin-right: 5px;" class="btn btn-sm btn-danger"><i class="fa fa-trash" style="font-size: 23px; margin-right: -0.5px;"></i></a>';
-            $btn .='</div></div>';
-            return $btn;
-            })
-            ->addColumn('formatDate', function($row) {
-                return date('d-m-Y', strtotime($row->tanggal_daftar));
+                $btn = '<a href="javascript:void(0)" onclick="editForm('.$row->id.')" style="margin-right: 5px;" class="btn btn-sm btn-warning"><i class="fa fa-edit" style="font-size: 23px; margin-right: -0.5px;"></i></a>';
+                $btn .= '<a href="javascript:void(0)" onclick="deleteRow('.$row->id.')" style="margin-right: 5px;" class="btn btn-sm btn-danger"><i class="fa fa-trash" style="font-size: 23px; margin-right: -0.5px;"></i></a>';
+                $btn .='</div></div>';
+                return $btn;
             })
             ->rawColumns(['action'])
             ->make(true);
         }
+        // return view('data-provinsi.main', ['data' => $data, 'menuActive' => $this->data['menuActive']]);
         return view('data-provinsi.main')->with('data', $this->data);
     }
 
     public function form(Request $request)
     {
-        $data['data'] = (!empty($request->id)) ? Provinsi::find($request->id) : "";
-        $content = view('data-provinsi.form')->render();
-	    return ['status' => 'success', 'content' => $content, 'data' => $data];
+      $data['data'] = (!empty($request->id)) ? Provinsi::find($request->id) : "";
+      $content = view('data-provinsi.form', $data)->render();
+      return ['status' => 'success', 'content' => $content, 'data' => $data];
     }
 
     public function store(Request $request)
     {
         // return $request->all();
+        $validator = Validator::make(
+            $request->all(),
+            [
+              'nama_provinsi' => 'required',
+            ],
+            [
+              'required' => ':attribute Tidak boleh kosong'
+            ]
+        );
+        if($validator->fails()) {
+            $pesan = $validator->errors()->first();
+            return response()->json(['status' => 'warning', 'code' => 201, 'message' => $pesan]);
+        }
         try {
             DB::beginTransaction();
 
@@ -53,7 +63,7 @@ class DataProvinsiController extends Controller
             $newdata->save();
 
             DB::commit();
-            return response()->json(['status' => 'succes', 'code' => 200, 'message' => 'Berhasil']);
+            return response()->json(['status' => 'success', 'code' => 200, 'message' => 'Berhasil']);
         } catch (\Exception $e) {
             throw($e);
             DB::rollback();
@@ -61,8 +71,26 @@ class DataProvinsiController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+      try {
+        $data = Provinsi::find($request->id);
+
+        if (!$data) {
+          return response()->json([
+            'error' => 'Data not found'
+          ], 404);
+        }
+
+        $data->delete();
+
+        return response()->json([
+          'success' => 'Data Berhasil Dihapus'
+        ]);
+      } catch (\Exception $e) {
+        return response()->json([
+          'error' => 'Terjadi kesalahan, silahkan coba lagi'
+        ], 500);
+      }
     }
 }

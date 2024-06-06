@@ -3,6 +3,10 @@
     Data Provinsi
 @endsection
 @section('content')
+@php
+    // dd($data);
+    $no = 1;
+@endphp
     <div class="card shadow mb-4 main-page">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Data Provinsi</h6>
@@ -12,15 +16,12 @@
                 <button type="button" onclick="addRow()" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#large-Modal"><i class="feather icon-plus"></i>Tambah Baru</button>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>No</th>
+                            <th>Nama Provinsi</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                 </table>
@@ -33,8 +34,7 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            console.log('datatable');
-            var table = $('#dataTables').dataTable({
+            var table = $('#dataTable').dataTable({
                 processing: true,
                 serverSide: true,
                 language: {
@@ -49,61 +49,8 @@
                     }
                 },
                 {
-                    data: 'nopendaftaran_lama',
-                    name: 'nopendaftaran_lama',
-                    render: function(data, type, row) {
-                        if (data) {
-                            return '<p style="color:black">' + data + '</p>';
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    data: 'NOPORSI',
-                    name: 'NOPORSI',
-                    render: function(data, type, row) {
-                    if(data) {
-                        return '<p style="color:black">'+data+'</p>';
-                    } else {
-                        return '-'
-                    }
-                    }
-                },
-                {
-                    data: 'nmLengkap',
-                    name: 'nmLengkap',
-                    render: function(data, type, row) {
-                        if (data) {
-                            return '<p style="color:black">' + data + '</p>';
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    data: 'alamat',
-                    name: 'alamat',
-                    render: function(data, type, row) {
-                        if (data) {
-                            return '<p style="color:black">' + data + '</p>';
-                        } else {
-                            return '-'
-                        }
-                    }
-                },
-                {
-                    data: 'estimasi_keberangkatan',
-                    name: 'estimasi_keberangkatan',
-                    render: function(data, type, row) {
-                        const date = new Date(data);
-                        const year = date.getFullYear();
-                        return '<p style="color:black">'+year+'</p>';
-                    }
-                },
-                {
-                    data: 'notelp',
-                    name: 'notelp',
+                    data: 'nama',
+                    name: 'nama',
                     render: function(data, type, row) {
                         if (data) {
                             return '<p style="color:black">' + data + '</p>';
@@ -130,6 +77,83 @@
                     $('.main-page').show();
                 }
             });
+        }
+
+        function editForm(id) {
+            $('.main-page').hide();
+            $.ajax({
+                url: "{!! route('form-data-provinsi') !!}",
+                type: "POST",
+                data: { id: id },
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    if (data.status == 'success') {
+                        $('.other-page').html(data.content).fadeIn();
+                    } else {
+                        $('.main-page').show();
+                    }
+                },
+                error: function() {
+                    $('.main-page').show();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong!',
+                        confirmButtonColor: '#1A4237',
+                    });
+                }
+            });
+        }
+
+
+        function deleteRow() {
+          Swal.fire({
+            title: 'Apakah Anda Yakin Akan Menghapus Data Ini?',
+            text: 'Data akan Dihapus, dan Tidak dapat diperbaharui kembali !!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1A4237',
+            confirmButtonText: 'Ya, Hapus Data',
+            cancelButtonText: 'Batal'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  $.ajax({
+                      url: '{{ route("destroy-data-provinsi") }}',
+                      method: 'POST',
+                      data: {
+                          _method: 'POST',
+                          _token: '{{ csrf_token() }}',
+                          id: id
+                      },
+                      success: function(response) {
+                          if (response.success) {
+                              Swal.fire({
+                                  icon: 'success',
+                                  title: 'Deleted!',
+                                  text: response.success
+                              });
+                              // location.reload();
+                              $('#dataTable').DataTable().ajax.reload();
+                          } else {
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'Error',
+                                  text: 'Failed to delete data'
+                              });
+                          }
+                      },
+                      error: function() {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: 'Data Gagal Dihapus!!.'
+                          });
+                      }
+                  });
+              }
+          });
         }
     </script>
 @endpush
