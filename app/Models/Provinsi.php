@@ -12,4 +12,8 @@ class Provinsi extends Model
     protected $table = 'provinsi';
     protected $primaryKey = 'id';
     protected  $guarded = ['id'];
+
+    public function kabupaten(){
+        return  $this->hasMany(Kabupaten::class, 'provinsi_id', 'id');
+    }
 }

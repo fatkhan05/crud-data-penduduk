@@ -22,8 +22,7 @@
                             <th>Jenis Kelamin</th>
                             <th>Tanggal Lahir</th>
                             <th>Alamat</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,8 +38,81 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#dataTables').dataTable( {
-            } );
+            var table = $('#dataTable').dataTable({
+              processing: true,
+              serverSide: true,
+              language: {
+                  searchPlaceholder: "Ketikkan yang dicari"
+              },
+              ajax: "{{ route('main-data-penduduk') }}",
+              columns: [{
+                  data: 'DT_RowIndex',
+                  name: 'DT_RowIndex',
+                  render: function(data, type, row) {
+                  return '<p style="color:black">' + data + '</p>';
+                  }
+              },
+              {
+                  data: 'nama',
+                  name: 'nama',
+                  render: function(data, type, row) {
+                      if (data) {
+                          return '<p style="color:black">' + data + '</p>';
+                      } else {
+                          return '-'
+                      }
+                  }
+              },
+              {
+                  data: 'nama',
+                  name: 'nama',
+                  render: function(data, type, row) {
+                      if (data) {
+                          return '<p style="color:black">' + data + '</p>';
+                      } else {
+                          return '-'
+                      }
+                  }
+              },
+              {
+                  data: 'nama',
+                  name: 'nama',
+                  render: function(data, type, row) {
+                      if (data) {
+                          return '<p style="color:black">' + data + '</p>';
+                      } else {
+                          return '-'
+                      }
+                  }
+              },
+              {
+                  data: 'nama',
+                  name: 'nama',
+                  render: function(data, type, row) {
+                      if (data) {
+                          return '<p style="color:black">' + data + '</p>';
+                      } else {
+                          return '-'
+                      }
+                  }
+              },
+              {
+                  data: 'nama',
+                  name: 'nama',
+                  render: function(data, type, row) {
+                      if (data) {
+                          return '<p style="color:black">' + data + '</p>';
+                      } else {
+                          return '-'
+                      }
+                  }
+              },
+              {
+                  data: 'action',
+                  name: 'action',
+
+              }]
+          });
         })
         function addRow() {
             $('.main-page').hide();

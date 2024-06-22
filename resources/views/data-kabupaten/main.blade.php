@@ -75,5 +75,82 @@
                 }
             });
         }
+
+        function editForm(id) {
+            $('.main-page').hide();
+            $.ajax({
+                url: "{!! route('form-data-kabupaten') !!}",
+                type: "POST",
+                data: { id: id },
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    if (data.status == 'success') {
+                        $('.other-page').html(data.content).fadeIn();
+                    } else {
+                        $('.main-page').show();
+                    }
+                },
+                error: function() {
+                    $('.main-page').show();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong!',
+                        confirmButtonColor: '#1A4237',
+                    });
+                }
+            });
+        }
+
+
+        function deleteRow() {
+          Swal.fire({
+            title: 'Apakah Anda Yakin Akan Menghapus Data Ini?',
+            text: 'Data akan Dihapus, dan Tidak dapat diperbaharui kembali !!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1A4237',
+            confirmButtonText: 'Ya, Hapus Data',
+            cancelButtonText: 'Batal'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  $.ajax({
+                      url: '{{ route("destroy-data-kabupaten") }}',
+                      method: 'POST',
+                      data: {
+                          _method: 'POST',
+                          _token: '{{ csrf_token() }}',
+                          id: id
+                      },
+                      success: function(response) {
+                          if (response.success) {
+                              Swal.fire({
+                                  icon: 'success',
+                                  title: 'Deleted!',
+                                  text: response.success
+                              });
+                              // location.reload();
+                              $('#dataTable').DataTable().ajax.reload();
+                          } else {
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'Error',
+                                  text: 'Failed to delete data'
+                              });
+                          }
+                      },
+                      error: function() {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: 'Data Gagal Dihapus!!.'
+                          });
+                      }
+                  });
+              }
+          });
+        }
     </script>
 @endpush

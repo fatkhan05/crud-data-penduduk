@@ -12,7 +12,7 @@
                         <select name="nama_provinsi" id="nama_provinsi" class="form-control select2">
                             <option value="" selected disabled>.:: Pilih Provinsi ::.</option>
                             @foreach ($provinsi as $prov)
-                                <option value="{{ $prov->id }}">{{ $prov->nama }}</option>
+                                <option value="{{ $prov->id }}" {{ (!empty($data->provinsi_id) && $data->provinsi_id == $prov->id) ? 'selected' : '' }}>{{ $prov->nama }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label for="nama_kabupaten">Nama Kabupaten <font color="red">*</font></label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Nama Kabupaten" disabled name="nama_kabupaten" value="{{ (!empty($data)) ? $data->nama : '' }}" id="nama_kabupaten">
+                            <input type="text" class="form-control" placeholder="Nama Kabupaten" {{ (!empty($data)) ? '' : 'disabled' }}  name="nama_kabupaten" value="{{ (!empty($data)) ? $data->nama : '' }}" id="nama_kabupaten">
                         </div>
                     </div>
                 </div>
@@ -36,6 +36,14 @@
     $('.select2').select2({
         placeholder: '.:: Pilih Provinsi ::.',
         width: '100%',
+    });
+    $('.btn-cancel').click(function(e){
+        e.preventDefault();
+        $('.other-page').fadeOut(function(){
+            $('.other-page').empty();
+            $('.main-page').fadeIn();
+            // $('#datagrid').DataTable().ajax.reload();
+        });
     });
     $(document).ready(function() {
         $('#nama_provinsi').change(function() {

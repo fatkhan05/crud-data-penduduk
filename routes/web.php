@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 # DATA PENDUDUK
 // Route::get('/data-penduduk', [DataPendudukController::class, 'index'])->name('main-data-penduduk');
+Route::post('getKabupaten', [DataPendudukController::class, 'getKabupaten'])->name('getKabupaten');
+
 Route::get('/', [DataPendudukController::class, 'index'])->name('main-data-penduduk');
 Route::post('/data-penduduk-form', [DataPendudukController::class, 'form'])->name('form-data-penduduk');
 
@@ -34,3 +36,5 @@ Route::post('/data-provinsi-destroy', [DataProvinsiController::class, 'destroy']
 # DATA KABUPATEN
 Route::get('/data-kabupaten', [DataKabupatenController::class, 'index'])->name('main-data-kabupaten');
 Route::post('/form-data-kabupaten', [DataKabupatenController::class, 'form'])->name('form-data-kabupaten');
+Route::post('/store-data-kabupaten', [DataKabupatenController::class, 'store'])->name('store-data-kabupaten');
+Route::post('/destroy-data-kabupaten', [DataKabupatenController::class, 'destroy'])->name('destroy-data-kabupaten');

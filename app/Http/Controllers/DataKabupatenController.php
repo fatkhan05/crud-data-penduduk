@@ -68,6 +68,25 @@ class DataKabupatenController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function destroy(Request $request) {
+      try {
+        $data = Kabupaten::find($request->id);
+
+        if (!$data) {
+          return response()->json([
+            'error' => 'Data not found'
+          ], 404);
+        }
+
+        $data->delete();
+
+        return response()->json([
+          'success' => 'Data Berhasil Dihapus'
+        ]);
+      } catch (\Exception $e) {
+        return response()->json([
+          'error' => 'Terjadi kesalahan, silahkan coba lagi'
+        ], 500);
+      }
     }
 }
