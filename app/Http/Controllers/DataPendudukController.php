@@ -44,6 +44,7 @@ class DataPendudukController extends Controller
     }
 
     public function store(Request $request) {
+        // return $request->all();
         $rules = [
             'nama_lengkap' => 'required',
         ];
@@ -61,7 +62,7 @@ class DataPendudukController extends Controller
           $newdata = (!empty($request->id)) ? Penduduk::find($request->id) : new Penduduk;
           $newdata->nama_penduduk = $request->nama_lengkap;
           $newdata->nik = $request->nik;
-          $newdata->jenis_kelamin = $request->jenis_kelamin;
+          $newdata->jenis_kelamin = $request->jnskelamin;
           $newdata->tanggal_lahir = $request->tglLahir;
           $newdata->alamat = $request->alamat;
           $newdata->provinsi = $request->provinsi;
@@ -76,8 +77,27 @@ class DataPendudukController extends Controller
     }
 
 
-    public function destroy($id) {
-        //
+    public function destroy(Request $request) {
+        try {
+            $data = Penduduk::find($request->id);
+
+            if(!$data) {
+                return response()->json([
+                    'error' => 'Data not found'
+                ]);
+            }
+
+            $data->delete();
+
+            return response()->json([
+                'status' => 'Success, Data berhasil dihapus'
+            ]);
+        } catch(\Exception $e) {
+            throw($e);
+            return response()->json([
+                'error ' => 'Terjadi kesalahan, Silahkan coba lagi'
+            ]);
+        }
     }
 
     public function getKabupaten(Request $request)

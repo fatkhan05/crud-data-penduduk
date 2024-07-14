@@ -53,8 +53,8 @@
                   }
               },
               {
-                  data: 'nama',
-                  name: 'nama',
+                  data: 'nama_penduduk',
+                  name: 'nama_penduduk',
                   render: function(data, type, row) {
                       if (data) {
                           return '<p style="color:black">' + data + '</p>';
@@ -64,8 +64,8 @@
                   }
               },
               {
-                  data: 'nama',
-                  name: 'nama',
+                  data: 'nik',
+                  name: 'nik',
                   render: function(data, type, row) {
                       if (data) {
                           return '<p style="color:black">' + data + '</p>';
@@ -75,8 +75,8 @@
                   }
               },
               {
-                  data: 'nama',
-                  name: 'nama',
+                  data: 'jenis_kelamin',
+                  name: 'jenis_kelamin',
                   render: function(data, type, row) {
                       if (data) {
                           return '<p style="color:black">' + data + '</p>';
@@ -86,8 +86,8 @@
                   }
               },
               {
-                  data: 'nama',
-                  name: 'nama',
+                  data: 'tanggal_lahir',
+                  name: 'tanggal_lahir',
                   render: function(data, type, row) {
                       if (data) {
                           return '<p style="color:black">' + data + '</p>';
@@ -97,8 +97,8 @@
                   }
               },
               {
-                  data: 'nama',
-                  name: 'nama',
+                  data: 'alamat',
+                  name: 'alamat',
                   render: function(data, type, row) {
                       if (data) {
                           return '<p style="color:black">' + data + '</p>';

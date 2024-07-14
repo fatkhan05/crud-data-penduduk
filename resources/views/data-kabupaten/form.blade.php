@@ -28,7 +28,7 @@
             </div>
         </form>
     <button type="button" class="btn btn-primary waves-effect btn-cancel">Kembali</button>
-    <button type="button" id="button-submit" class="btn btn-primary waves-effect float-right">Simpan</button>
+    <button type="button" id="button-submit" class="btn btn-save btn-primary waves-effect float-right">Simpan</button>
 </div>
 </div>
 
@@ -54,6 +54,50 @@
                 $('#nama_kabupaten').attr('disabled', 'disabled');
             }
         });
+
+        $('.btn-save').click(function () {
+            console.log('data dismpan');
+            var data = new FormData($('.form-save')[0]);
+            $.ajax({
+                data: data,
+                url: "{{ route('store-data-kabupaten') }}",
+                type: "post",
+                processData: false,
+                contentType: false,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+                },
+            }).done(function(result) {
+                if (result.code == 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: result.message,
+                        timer: 1000,
+                        confirmButtonColor: '#1A4237',
+                    });
+                    $('.other-page').fadeOut(function() {
+                        $('.other-page').html('');
+                        $('.main-page').fadeIn();
+                        $('#dataTable').DataTable().ajax.reload();
+                    });
+                } else if (result.status === 'warning' || result.status === 'error') {
+                    Swal.fire({
+                        icon: result.status === 'warning' ? 'warning' : 'error',
+                        title: result.status === 'warning' ? 'Whoops!' : 'Error!',
+                        text: result.message,
+                        confirmButtonColor: '#1A4237',
+                    });
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'Something went wrong! Please try again later.',
+                    confirmButtonColor: '#1A4237',
+                });
+            });
+        })
     });
 
 </script>

@@ -26,6 +26,7 @@ Route::post('getKabupaten', [DataPendudukController::class, 'getKabupaten'])->na
 
 Route::get('/', [DataPendudukController::class, 'index'])->name('main-data-penduduk');
 Route::post('/data-penduduk-form', [DataPendudukController::class, 'form'])->name('form-data-penduduk');
+Route::post('/data-penduduk-store', [DataPendudukController::class, 'store'])->name('save-data-penduduk');
 
 # DATA PROVINSI
 Route::get('/data-provinsi', [DataProvinsiController::class, 'index'])->name('main-data-provinsi');

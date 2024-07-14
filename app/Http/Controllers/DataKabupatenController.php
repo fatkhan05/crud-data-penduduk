@@ -7,6 +7,7 @@ use App\Models\Provinsi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use DB;
 
 class DataKabupatenController extends Controller
 {
